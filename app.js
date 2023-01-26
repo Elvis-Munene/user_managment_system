@@ -2,7 +2,7 @@ const express = require('express');
 
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const mysql = require('mysql')
+
 var hbs = require('hbs');
 
 require('dotenv').config();
@@ -31,11 +31,10 @@ app.set('view engine', 'ejs');
 
 
 
-//Router
 
-app.get('/', (req, res) => {
-    res.render("main.ejs");
-})
 
+
+const routes = require('./server/routes/user');
+app.use('/', routes);
 
 app.listen(port, ()=> console.log(`listening on port ${port}`));
