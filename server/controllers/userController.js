@@ -10,20 +10,28 @@ const pool = mysql.createPool({
     
     });
     
-    pool.getConnection((err, connection) => {
-        if(err) throw err; //not connected
-        console.log('Connected as ID  '+ connection.threadId);
-    })
-
-
-
-
-
-
-
-
 
 //view users
 exports.view = (req, res ) => {
-    res.render('main.ejs');
+    
+
+    pool.getConnection((err, connection) => {
+        if(err) throw err; //not connected
+        console.log('Connected as ID  '+ connection.threadId);
+    
+   
+    //use the connection
+    connection.query('SELECT * FROM user', (err, rows) => {
+        //When done with the connection, release it
+        connection.release();
+        if(!err){
+            res.render('main.ejs', {rows})
+        } else{
+            console.log(err)
+        }
+
+        console.log('The data from user table: \n', rows);
+    });  
+});
+
 }
