@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 
 //view users
 exports.view = (req, res ) => {
-    
+    res.render('main');
 
     pool.getConnection((err, connection) => {
         if(err) throw err; //not connected
